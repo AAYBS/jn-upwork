@@ -1,5 +1,6 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/AAYBS/jn-upwork?branch=master)](https://bettercodehub.com/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ca6b7f100fe040308ef5ba460000a7ce)](https://app.codacy.com/app/ZoranPandovski/jn-upwork?utm_source=github.com&utm_medium=referral&utm_content=AAYBS/jn-upwork&utm_campaign=Badge_Grade_Dashboard)
+[![Known Vulnerabilities](https://snyk.io/test/github/AAYBS/GIC/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/AAYBS/GIC?targetFile=requirements.txt)
 # Upwork jobs notification
 
 Get notified when a job that is interesting to you (i.e. meets certain criteria) is posted on upwork.
