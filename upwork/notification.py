@@ -48,6 +48,7 @@ class UpworkClient(object):
 
     def __send_mail(self, message):
         config = configparser.ConfigParser()
+        config.read("configuration.ini")
         sender = config['email']['mail_from']
         receivers = config['email']['mail_to']
 
@@ -91,6 +92,7 @@ class UpworkClient(object):
 
 if __name__ == "__main__":
     config = configparser.ConfigParser()
+    config.read("configuration.ini")
     api_key = config['uwpork']['api_key']
     api_secret = config['uwpork']['api_key']
     job_skill = config['upwork']['job_skill']
