@@ -21,6 +21,14 @@ class Job(object):
         return job_info
 
 
+class Config(object):
+    def __init__(self, source_path):
+        script_dir = os.path.dirname(__file__)
+        abs_file_path = os.path.join(script_dir, source_path)
+        config = configparser.ConfigParser()
+        config.read_file(open(abs_file_path))
+        self.config = config
+
 class UpworkClient(object):
     def __init__(self, public_key, secret_key):
         self.public_key = public_key
@@ -93,11 +101,12 @@ class UpworkClient(object):
 
 if __name__ == "__main__":
     # Import configuration
-    script_dir = os.path.dirname(__file__)
-    rel_path = "configuration.ini"
-    abs_file_path = os.path.join(script_dir, rel_path)
-    config = configparser.ConfigParser()
-    config.read_file(open(abs_file_path))
+    # script_dir = os.path.dirname(__file__)
+    # rel_path = "configuration.ini"
+    # abs_file_path = os.path.join(script_dir, rel_path)
+    # config = configparser.ConfigParser()
+    # config.read_file(open(abs_file_path))
+    config = Config("configuration.ini")
     # Define local parameters
     api_key = config['upwork']['api_key']
     api_secret = config['upwork']['api_key']

@@ -1,15 +1,19 @@
 import datetime as dt
 import unittest
-import configparser
-from .notification import Job
-from .notification import UpworkClient
+from .notification import Job, Config, UpworkClient
 
 
-config = configparser.ConfigParser()
-config.read("configuration.ini")
+config = Config("configuration.ini").config
+
 api_key = config['upwork']['api_key']
 api_secret = config['upwork']['api_key']
 job_skill = config['upwork']['job_skill']
+job_query = dict(
+    skills=[job_skill],
+    budget='[100 TO 100000]',
+    duration=['week', 'month', 'ongoing']
+)
+
 
 
 class TestJob(unittest.TestCase):
@@ -34,12 +38,6 @@ class TestJob(unittest.TestCase):
 
 
 class TestUpworkClient(unittest.TestCase):
-
-    job_query = dict(
-        skills=[job_skill],
-        budget='[100 TO 100000]',
-        duration=['week', 'month', 'ongoing']
-    )
 
     def setUp(self):
         self.upworkclient = UpworkClient(api_key, api_secret)
