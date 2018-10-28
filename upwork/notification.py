@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta
 import configparser
 import smtplib
+import upwork
 
 
 class Job(object):
@@ -22,16 +23,21 @@ class Job(object):
 
 
 class Config(object):
-    def __init__(self, source_path):
-        script_dir = os.path.dirname(__file__)
-        abs_file_path = os.path.join(script_dir, source_path)
+    def __init__(self, source_path='', content=''):
         config = configparser.ConfigParser()
-        config.read_file(open(abs_file_path))
+        if len(source_path) > 0:
+            script_dir = os.path.dirname(__file__)
+            abs_file_path = os.path.join(script_dir, source_path)
+            config.read_file(open(abs_file_path))
+        elif len(content) > 0:
+            config.read_string(content)
+        else:
+            raise Exception("Specify a configuration file path, or content.")
         self.config = config
 
 class UpworkClient(object):
     def __init__(self, public_key, secret_key):
-        if len(public_key) > 0 & len(secret_key) > 0:
+        if (len(public_key) > 0) & (len(secret_key) > 0):
             self.public_key = public_key
             self.secret_key = secret_key
         else:
@@ -54,7 +60,8 @@ class UpworkClient(object):
                 oauth_access_token=oauth_access_token,
                 oauth_access_token_secret=oauth_access_token_secret)
         except Exception as e:
-            print("Error: unable to authenticate " + e.message)
+            print(f"Error: unable to authenticate {e!s}")
+            raise
 
         return client
 
@@ -83,7 +90,8 @@ class UpworkClient(object):
             upwork_jobs = \
                 upwork.provider_v2.search_jobs(job_query, page_size=20)
         except Exception as e:
-            print("Error: unable to connect " + e.message)
+            print(f"Error: unable to connect {e!s}")
+            raise
 
         jobs = []
         current_time = datetime.now() - timedelta(hours=1)
