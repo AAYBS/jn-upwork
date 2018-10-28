@@ -1,6 +1,8 @@
+import os
 from datetime import datetime, timedelta
 import configparser
 import smtplib
+import upwork
 
 
 class Job(object):
@@ -20,15 +22,32 @@ class Job(object):
         return job_info
 
 
+class Config(object):
+    def __init__(self, source_path='', content=''):
+        config = configparser.ConfigParser()
+        if len(source_path) > 0:
+            script_dir = os.path.dirname(__file__)
+            abs_file_path = os.path.join(script_dir, source_path)
+            config.read_file(open(abs_file_path))
+        elif len(content) > 0:
+            config.read_string(content)
+        else:
+            raise Exception("Specify a configuration file path, or content.")
+        self.config = config
+
 class UpworkClient(object):
     def __init__(self, public_key, secret_key):
-        self.public_key = public_key
-        self.secret_key = secret_key
+        if (len(public_key) > 0) & (len(secret_key) > 0):
+            self.public_key = public_key
+            self.secret_key = secret_key
+        else:
+            raise Exception("No Authentication key\n" +\
+            "Go to https://developers.upwork.com/?lang=python#getting-started")
 
     def __client(self):
         '''
         Authenticate to Upwork API
-        :return: uwpork client obj
+        :return: upwork client obj
         '''
         try:
             upwork_client = upwork.Client(
@@ -41,7 +60,8 @@ class UpworkClient(object):
                 oauth_access_token=oauth_access_token,
                 oauth_access_token_secret=oauth_access_token_secret)
         except Exception as e:
-            print("Error: unable to authenticate " + e.message)
+            print(f"Error: unable to authenticate {e!s}")
+            raise
 
         return client
 
@@ -70,7 +90,8 @@ class UpworkClient(object):
             upwork_jobs = \
                 upwork.provider_v2.search_jobs(job_query, page_size=20)
         except Exception as e:
-            print("Error: unable to connect " + e.message)
+            print(f"Error: unable to connect {e!s}")
+            raise
 
         jobs = []
         current_time = datetime.now() - timedelta(hours=1)
@@ -91,10 +112,16 @@ class UpworkClient(object):
 
 
 if __name__ == "__main__":
-    config = configparser.ConfigParser()
-    config.read("configuration.ini")
-    api_key = config['uwpork']['api_key']
-    api_secret = config['uwpork']['api_key']
+    # Import configuration
+    # script_dir = os.path.dirname(__file__)
+    # rel_path = "configuration.ini"
+    # abs_file_path = os.path.join(script_dir, rel_path)
+    # config = configparser.ConfigParser()
+    # config.read_file(open(abs_file_path))
+    config = Config("configuration.ini")
+    # Define local parameters
+    api_key = config['upwork']['api_key']
+    api_secret = config['upwork']['api_key']
     job_skill = config['upwork']['job_skill']
 
     upwork = UpworkClient(api_key, api_secret)

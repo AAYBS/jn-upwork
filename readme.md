@@ -25,7 +25,7 @@ Before you start using Upwork API, you need to register your application and obt
 After that add required configuration options.
 ```
 # Upwork API
-[uwpork]
+[upwork]
 api_key=
 api_secret=
 job_skill=
