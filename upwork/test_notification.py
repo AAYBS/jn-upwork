@@ -4,7 +4,6 @@ from .notification import Job, Config, UpworkClient
 
 
 config = Config("configuration.ini").config
-
 api_key = config['upwork']['api_key']
 api_secret = config['upwork']['api_key']
 job_skill = config['upwork']['job_skill']
@@ -13,7 +12,6 @@ job_query = dict(
     budget='[100 TO 100000]',
     duration=['week', 'month', 'ongoing']
 )
-
 
 
 class TestJob(unittest.TestCase):

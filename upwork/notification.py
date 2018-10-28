@@ -31,8 +31,12 @@ class Config(object):
 
 class UpworkClient(object):
     def __init__(self, public_key, secret_key):
-        self.public_key = public_key
-        self.secret_key = secret_key
+        if len(public_key) > 0 & len(secret_key) > 0:
+            self.public_key = public_key
+            self.secret_key = secret_key
+        else:
+            raise Exception("No Authentication key\n" +\
+            "Go to https://developers.upwork.com/?lang=python#getting-started")
 
     def __client(self):
         '''
