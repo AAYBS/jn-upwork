@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 import configparser
 import smtplib
@@ -28,7 +29,7 @@ class UpworkClient(object):
     def __client(self):
         '''
         Authenticate to Upwork API
-        :return: uwpork client obj
+        :return: upwork client obj
         '''
         try:
             upwork_client = upwork.Client(
@@ -91,10 +92,15 @@ class UpworkClient(object):
 
 
 if __name__ == "__main__":
+    # Import configuration
+    script_dir = os.path.dirname(__file__)
+    rel_path = "configuration.ini"
+    abs_file_path = os.path.join(script_dir, rel_path)
     config = configparser.ConfigParser()
-    config.read("configuration.ini")
-    api_key = config['uwpork']['api_key']
-    api_secret = config['uwpork']['api_key']
+    config.read_file(open(abs_file_path))
+    # Define local parameters
+    api_key = config['upwork']['api_key']
+    api_secret = config['upwork']['api_key']
     job_skill = config['upwork']['job_skill']
 
     upwork = UpworkClient(api_key, api_secret)

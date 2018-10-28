@@ -1,8 +1,15 @@
 import datetime as dt
 import unittest
 import configparser
-from upwork.notifications import Job
-from upwork.notifications import UpworkClient
+from .notification import Job
+from .notification import UpworkClient
+
+
+config = configparser.ConfigParser()
+config.read("configuration.ini")
+api_key = config['upwork']['api_key']
+api_secret = config['upwork']['api_key']
+job_skill = config['upwork']['job_skill']
 
 
 class TestJob(unittest.TestCase):
@@ -10,7 +17,7 @@ class TestJob(unittest.TestCase):
     def setUp(self):
         self.job = Job(
           "Expert", dt.date(2001, 1, 1), "developers", "…",
-          "Lead Android Developer", 
+          "Lead Android Developer",
           "https://www.upwork.com/job/Lead-Android-Developer-Full-Time_~01f6da1b38a626ea53/",
         )
 
@@ -28,15 +35,12 @@ class TestJob(unittest.TestCase):
 
 class TestUpworkClient(unittest.TestCase):
 
-    api_key = config['uwpork']['api_key']
-    api_secret = config['uwpork']['api_key']
-    job_skill = config['upwork']['job_skill']
     job_query = dict(
         skills=[job_skill],
         budget='[100 TO 100000]',
         duration=['week', 'month', 'ongoing']
     )
-    
+
     def setUp(self):
         self.upworkclient = UpworkClient(api_key, api_secret)
 
