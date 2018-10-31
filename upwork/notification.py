@@ -112,12 +112,6 @@ class UpworkClient(object):
 
 
 if __name__ == "__main__":
-    # Import configuration
-    # script_dir = os.path.dirname(__file__)
-    # rel_path = "configuration.ini"
-    # abs_file_path = os.path.join(script_dir, rel_path)
-    # config = configparser.ConfigParser()
-    # config.read_file(open(abs_file_path))
     config = Config("configuration.ini")
     # Define local parameters
     api_key = config['upwork']['api_key']
