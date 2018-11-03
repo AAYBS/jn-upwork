@@ -6,19 +6,16 @@ import upwork
 
 
 class Job(object):
-    def __init__(self, budget, date_created, job_type, info, title, url):
-        self.budget = budget
-        self.date = date_created
-        self.type = job_type
-        self.info = info
-        self.title = title
-        self.url = url
+    def __init__(self, job_info):
+        self.job_info = job_info
 
     def __str__(self):
-        job_info = "New job: %s \nType: %s" %(self.title, self.type)
+        job_info = "New job: %s \nType: %s" %(self.job_info['title'],
+                                              self.job_info['type'])
         job_info += "\nBudget : %s $ \nCreated on: %s " % (
-            self.budget, self.date)
-        job_info += "Informations: %s \nLink: %s" % (self.info, self.url)
+            self.job_info['budget'], self.job_info['date'])
+        job_info += "Informations: %s \nLink: %s" % (self.job_info['info'],
+                                                     self.job_info['url'])
         return job_info
 
 
@@ -60,7 +57,7 @@ class UpworkClient(object):
                 oauth_access_token=oauth_access_token,
                 oauth_access_token_secret=oauth_access_token_secret)
         except Exception as e:
-            print(f"Error: unable to authenticate {e!s}")
+            print("Error: unable to authenticate ", e)
             raise
 
         return client
@@ -90,7 +87,7 @@ class UpworkClient(object):
             upwork_jobs = \
                 upwork.provider_v2.search_jobs(job_query, page_size=20)
         except Exception as e:
-            print(f"Error: unable to connect {e!s}")
+            print("Error: unable to connect {e!s}")
             raise
 
         jobs = []
@@ -101,12 +98,7 @@ class UpworkClient(object):
                                          "%Y-%m-%dT%H:%M:%S+0000")
             # check if job is posted in the last hour if not skip it
             if created < current_time:
-                jobs.append(Job(job['budget'],
-                                job['date_created'],
-                                job['job_type'],
-                                job['snippet'],
-                                job['title'],
-                                job['url']))
+                jobs.append(Job(job))
         self.__send_mail(jobs)
         return jobs
 
