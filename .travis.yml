@@ -1,6 +1,14 @@
 language: python
 python: 
-  - "2.7"
+  - "3.6"
 install:
  - pip install -r requirements.txt
-script: python -m unittest upwork/test_notification.py
+ - pip install coveralls
+ - pip install coverage
+before_script:
+ - cd upwork
+script:
+- coverage run -m -p unittest test_notification.py
+- coverage report -m
+after_success:
+  - coveralls
