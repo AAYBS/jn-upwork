@@ -1,3 +1,4 @@
+[![Build Status](https://img.shields.io/travis/AAYBS/jn-upwork/master.svg?logo=travis)](https://travis-ci.org/AAYBS/jn-upwork)
 [![Maintainability](https://api.codeclimate.com/v1/badges/25e0f49dcb48d57b5960/maintainability)](https://codeclimate.com/github/AAYBS/jn-upwork/maintainability)
 [![BCH compliance](https://bettercodehub.com/edge/badge/AAYBS/jn-upwork?branch=master)](https://bettercodehub.com/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ca6b7f100fe040308ef5ba460000a7ce)](https://app.codacy.com/app/ZoranPandovski/jn-upwork?utm_source=github.com&utm_medium=referral&utm_content=AAYBS/jn-upwork&utm_campaign=Badge_Grade_Dashboard)
