@@ -1,7 +1,7 @@
 import datetime as dt
 import unittest
 from notification import Job, Config, UpworkClient
-
+import json
 
 config = Config("test_configuration.ini").config
 api_key = config['upwork']['api_key']
@@ -17,21 +17,21 @@ job_query = dict(
 class TestJob(unittest.TestCase):
 
     def setUp(self):
-        self.job = Job(
-          "Expert", dt.date(2001, 1, 1), "developers", "…",
-          "Lead Android Developer",
-          "https://www.upwork.com/job/test",
-        )
+        job_string = '{"budget": "750", "category2": "Web & Mobile Development", "date_created": "2014-06-30T23:50:17+0000", ' \
+            '"url": "https://www.upwork.com/job/test", "job_type": "Fixed", ' \
+            '"title": "Looking for highly skilled web developer"}'
+        json_object = json.loads(job_string)
+        self.job = Job(json_object)
 
     def test_init(self):
-        self.assertEqual(self.job.budget, "Expert")
-        self.assertEqual(self.job.date, dt.date(2001, 1, 1))
+        self.assertEqual(self.job.job_info['budget'], "750")
+        self.assertEqual(dt.datetime.strptime(self.job.job_info['date_created'], '%Y-%m-%dT%H:%M:%S%z').date(), dt.date(2014, 6, 30))
 
     def test_job_info(self):
         self.assertEqual(str(self.job),
-          "New job: Lead Android Developer \nType: developers\n" +\
-          "Budget : Expert $ \nCreated on: 2001-01-01 " +\
-          "Informations: … \nLink: https://www.upwork.com/job/test"
+          "New job: Looking for highly skilled web developer \nType: Fixed\n" +\
+          "Budget : 750 $ \nCreated on: 2014-06-30T23:50:17+0000 " +\
+          "Informations: Web & Mobile Development \nLink: https://www.upwork.com/job/test"
         )
 
 class TestConfig(unittest.TestCase):

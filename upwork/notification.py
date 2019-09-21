@@ -11,10 +11,10 @@ class Job(object):
 
     def __str__(self):
         job_info = "New job: %s \nType: %s" %(self.job_info['title'],
-                                              self.job_info['type'])
+                                              self.job_info['job_type'])
         job_info += "\nBudget : %s $ \nCreated on: %s " % (
-            self.job_info['budget'], self.job_info['date'])
-        job_info += "Informations: %s \nLink: %s" % (self.job_info['info'],
+            self.job_info['budget'], self.job_info['date_created'])
+        job_info += "Informations: %s \nLink: %s" % (self.job_info['category2'],
                                                      self.job_info['url'])
         return job_info
 
