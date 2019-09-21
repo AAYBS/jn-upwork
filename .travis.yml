@@ -8,7 +8,8 @@ install:
 before_script:
  - cd upwork
 script:
-- coverage run -m -p unittest test_notification.py
-- coverage report -m
+# - coverage run -m -p unittest test_notification.py
+# - coverage report -m
+- py.test upwork  -v --cov upwork --cov-report term-missing
 after_success:
   - coveralls
