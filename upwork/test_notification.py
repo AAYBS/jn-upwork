@@ -1,6 +1,6 @@
 import datetime as dt
 import unittest
-from .notification import Job, Config, UpworkClient
+from notification import Job, Config, UpworkClient
 import json
 
 config = Config("test_configuration.ini").config
