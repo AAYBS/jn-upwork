@@ -9,6 +9,6 @@ before_script:
  - cd upwork
 script:
 - coverage run -m -p unittest test_notification.py
-- coverage report -m
+# coverage report -m
 after_success:
-  - coveralls
+  # coveralls
